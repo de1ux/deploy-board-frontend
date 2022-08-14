@@ -6,6 +6,11 @@ import {useInterval} from "./setInterval";
 
 const {Header, Footer, Sider, Content} = Layout;
 
+let url = "http://localhost:8080";
+if (window.location.hostname.indexOf("herokuapp.com") > -1) {
+    // must be deployed
+    url = "https://deploy-board-backend.herokuapp.com";
+}
 
 let checkmark = (key) => (_, data) => {
     let value = data[key]
@@ -20,12 +25,12 @@ function App() {
 
     // fetch on initial load
     useEffect(() => {
-        fetch("http://localhost:8080/deploys").then(d => d.json()).then(d => setData(d.data));
+        fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data));
     }, [])
 
     // refetch every 30s
     useInterval(() => {
-        fetch("http://localhost:8080/deploys").then(d => d.json()).then(d => setData(d.data));
+        fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data));
     }, 15 * 1000)
 
     const github = <Tag color="blue">Github</Tag>;
@@ -100,7 +105,7 @@ function App() {
                     ]}/>
                 </Content>
                 <div>
-                    Source on Github
+                    <a href="https://github.com/de1ux/deploy-board-backend">Backend</a> | <a href="https://github.com/de1ux/deploy-board-frontend">Frontend</a>
                 </div>
             </Layout>
 
