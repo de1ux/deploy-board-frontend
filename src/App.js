@@ -4,7 +4,7 @@ import {CheckCircleTwoTone, ExclamationCircleOutlined} from "@ant-design/icons";
 import {Layout, Table, Tag} from "antd";
 import {useInterval} from "./setInterval";
 
-const {Header, Footer, Sider, Content} = Layout;
+const {Content} = Layout;
 
 let url = "http://localhost:8080";
 if (window.location.hostname.indexOf("herokuapp.com") > -1) {
