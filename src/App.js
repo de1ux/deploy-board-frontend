@@ -7,9 +7,9 @@ import {useInterval} from "./setInterval";
 const {Content} = Layout;
 
 let url = "http://localhost:8080";
-if (window.location.hostname.indexOf("herokuapp.com") > -1) {
+if (window.location.hostname.indexOf("cohort-four.com") > -1) {
     // must be deployed
-    url = "https://deploy-board-backend.herokuapp.com";
+    url = "http://deployboardbackend-env.eba-zxsfd7vm.us-east-1.elasticbeanstalk.com";
 }
 
 let checkmark = (key) => (_, data) => {
@@ -28,10 +28,10 @@ function App() {
         fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data));
     }, [])
 
-    // refetch every 30s
+    // refetch every 10s
     useInterval(() => {
         fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data));
-    }, 15 * 1000)
+    }, 10 * 1000)
 
     const github = <Tag color="blue">Github</Tag>;
     const heroku = <Tag color="green">Heroku</Tag>;
