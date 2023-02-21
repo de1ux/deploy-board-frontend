@@ -1,15 +1,13 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {CheckCircleTwoTone, ExclamationCircleOutlined} from "@ant-design/icons";
-import {Layout, Table, Tag} from "antd";
+import {Table, Tag} from "antd";
 import {useInterval} from "./setInterval";
 
-const {Content} = Layout;
 
 let url = "http://localhost:8080";
 if (window.location.hostname.indexOf("cohort-four.com") > -1) {
-    // must be deployed
-    url = "http://deployboardbackend-env.eba-zxsfd7vm.us-east-1.elasticbeanstalk.com";
+    url = "https://api.cohort-four.com";
 }
 
 let checkmark = (key) => (_, data) => {
@@ -25,89 +23,101 @@ function App() {
 
     // fetch on initial load
     useEffect(() => {
-        fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data));
+        fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data.users));
     }, [])
 
     // refetch every 10s
     useInterval(() => {
-        fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data));
+        fetch(url + "/deploys").then(d => d.json()).then(d => setData(d.data.users));
     }, 10 * 1000)
 
-    const github = <Tag color="blue">Github</Tag>;
-    const heroku = <Tag color="green">Heroku</Tag>;
-    const blog = <Tag color="gold">Blog</Tag>;
-    const capstone = <Tag color="purple">Capstone</Tag>;
+    const github = <Tag color="#1677ff">Github</Tag>;
+    const aws = <Tag color="teal">AWS</Tag>;
+    const s3 = <Tag color="green">S3 Buckets</Tag>;
+    const rds = <Tag color="green">RDS</Tag>;
+    const cloudfront = <Tag color="green">Cloudfront Distribution</Tag>;
+    const acm = <Tag color="green">Certificate Manager</Tag>;
+    const errors = <Tag color="gray">Errors</Tag>;
+
+    const blog_frontend = <Tag color="blue">Blog Frontend</Tag>;
+    const blog_backend = <Tag color="blue">Blog Backend</Tag>;
+    const capstone_frontend = <Tag color="purple">Capstone Frontend</Tag>;
+    const capstone_backend = <Tag color="purple">Capstone Backend</Tag>;
+
     const frontend = <Tag>frontend</Tag>
     const backend = <Tag>backend</Tag>
 
     return (
         <>
-            <Layout style={{padding: 20}}>
-                <div>
-                    <h1 style={{color: 'black'}}>Week 21 | DevOps Deploy Board</h1>
-                </div>
-                <Content>
-                    <Table pagination={false} dataSource={data} columns={[
-                        {
-                            title: <b>Username</b>,
-                            dataIndex: 'username',
-                            key: 'username',
-                            render: (_, data) => <a href={"https://github.com/" + data.username}>{data.username}</a>
-                        },
-                        {
-                            title: <p>{github} {blog} {frontend}</p>,
-                            dataIndex: 'git_frontend_blog',
-                            key: 'git_frontend_blog',
-                            render: checkmark('git_frontend_blog')
-                        },
-                        {
-                            title: <p>{github} {blog} {backend}</p>,
-                            dataIndex: 'git_backend_blog',
-                            key: 'git_backend_blog',
-                            render: checkmark('git_backend_blog')
-                        },
-                        {
-                            title: <p>{heroku} {blog} {frontend}</p>,
-                            dataIndex: 'heroku_frontend_blog',
-                            key: 'heroku_frontend_blog',
-                            render: checkmark('heroku_frontend_blog')
-                        },
-                        {
-                            title: <p>{heroku} {blog} {backend}</p>,
-                            dataIndex: 'heroku_backend_blog',
-                            key: 'heroku_backend_blog',
-                            render: checkmark('heroku_backend_blog')
-                        },
-                        {
-                            title: <p>{github} {capstone} {frontend}</p>,
-                            dataIndex: 'git_frontend_capstone',
-                            key: 'git_frontend_capstone',
-                            render: checkmark('git_frontend_capstone')
-                        },
-                        {
-                            title: <p>{github} {capstone} {backend}</p>,
-                            dataIndex: 'git_backend_capstone',
-                            key: 'git_backend_capstone',
-                            render: checkmark('git_backend_capstone')
-                        },
-                        {
-                            title: <p>{heroku} {capstone} {frontend}</p>,
-                            dataIndex: 'heroku_frontend_capstone',
-                            key: 'heroku_frontend_capstone',
-                            render: checkmark('heroku_frontend_capstone')
-                        },
-                        {
-                            title: <p>{heroku} {capstone} {backend}</p>,
-                            dataIndex: 'heroku_backend_capstone',
-                            key: 'heroku_backend_capstone',
-                            render: checkmark('heroku_backend_capstone')
-                        }
-                    ]}/>
-                </Content>
-                <div>
-                    <a href="https://github.com/de1ux/deploy-board-backend">Backend</a> | <a href="https://github.com/de1ux/deploy-board-frontend">Frontend</a> | Nathan Evans
-                </div>
-            </Layout>
+            <div style={{padding: "10px"}}>
+                <h1 style={{color: 'black'}}>Week 21 | DevOps Deploy Board</h1>
+            </div>
+            <Table pagination={false} dataSource={data} columns={[
+                {
+                    title: <b>Username</b>,
+                    dataIndex: 'username',
+                    key: 'username',
+                    render: (_, data) => <a href={"https://github.com/" + data.github_handle}>{data.github_handle}</a>
+                },
+                {
+                    title: <p>{github}<br/>{blog_backend}</p>,
+                    dataIndex: 'has_git_frontend_blog',
+                    key: 'has_git_frontend_blog',
+                    render: checkmark('has_git_frontend_blog')
+                },
+                {
+                    title: <p>{github}<br/>{blog_frontend}</p>,
+                    dataIndex: 'has_git_backend_blog',
+                    key: 'has_git_backend_blog',
+                    render: checkmark('has_git_backend_blog')
+                },
+                {
+                    title: <p>{aws}<br/>{s3}</p>,
+                    dataIndex: 'has_s3_buckets',
+                    key: 'has_s3_buckets',
+                    render: checkmark('has_s3_buckets')
+                },
+                {
+                    title: <p>{aws}<br/>{cloudfront}</p>,
+                    dataIndex: 'has_cloudfronts',
+                    key: 'has_cloudfronts',
+                    render: checkmark('has_cloudfronts')
+                },
+                {
+                    title: <p>{aws}<br/>{rds}</p>,
+                    dataIndex: 'has_rds',
+                    key: 'has_rds',
+                    render: checkmark('has_rds')
+                },
+                {
+                    title: <p>{aws}<br/>{acm}</p>,
+                    dataIndex: 'has_acms',
+                    key: 'has_acms',
+                    render: checkmark('has_acms')
+                },
+                {
+                    title: <p>{aws}<br/>{errors}</p>,
+                    dataIndex: 'errors',
+                    key: 'errors',
+                    render: (_, data) => <textarea cols={20} rows={1}>{data.error}</textarea>
+                },
+                {
+                    title: <p>{github}<br/>{capstone_frontend}</p>,
+                    dataIndex: 'has_git_frontend_capstone',
+                    key: 'has_git_frontend_capstone',
+                    render: checkmark('has_git_frontend_capstone')
+                },
+                {
+                    title: <p>{github}<br/>{capstone_backend}</p>,
+                    dataIndex: 'has_git_backend_capstone',
+                    key: 'has_git_backend_capstone',
+                    render: checkmark('has_git_backend_capstone')
+                }
+            ]}/>
+            <div style={{padding: "10px"}}>
+                <a href="https://github.com/de1ux/deploy-board-backend">Backend</a> | <a
+                href="https://github.com/de1ux/deploy-board-frontend">Frontend</a>
+            </div>
 
         </>
     );
