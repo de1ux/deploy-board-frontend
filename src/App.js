@@ -43,10 +43,7 @@ function App() {
     const blog_backend = <Tag color="blue">Blog Backend</Tag>;
     const capstone_frontend = <Tag color="purple">Capstone Frontend</Tag>;
     const capstone_backend = <Tag color="purple">Capstone Backend</Tag>;
-
-    const frontend = <Tag>frontend</Tag>
-    const backend = <Tag>backend</Tag>
-
+    
     return (
         <>
             <div style={{padding: "10px"}}>
