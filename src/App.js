@@ -105,7 +105,7 @@ function App() {
                     ]}/>
                 </Content>
                 <div>
-                    <a href="https://github.com/de1ux/deploy-board-backend">Backend</a> | <a href="https://github.com/de1ux/deploy-board-frontend">Frontend</a>
+                    <a href="https://github.com/de1ux/deploy-board-backend">Backend</a> | <a href="https://github.com/de1ux/deploy-board-frontend">Frontend</a> | Nathan Evans
                 </div>
             </Layout>
 
