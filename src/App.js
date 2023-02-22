@@ -43,7 +43,7 @@ function App() {
     const blog_backend = <Tag color="blue">Blog Backend</Tag>;
     const capstone_frontend = <Tag color="purple">Capstone Frontend</Tag>;
     const capstone_backend = <Tag color="purple">Capstone Backend</Tag>;
-    
+
     return (
         <>
             <div style={{padding: "10px"}}>
@@ -54,7 +54,8 @@ function App() {
                     title: <b>Username</b>,
                     dataIndex: 'username',
                     key: 'username',
-                    render: (_, data) => <a href={"https://github.com/" + data.github_handle}>{data.github_handle}</a>
+                    render: (_, data) => <p><span>{data.name}</span><br/> <a
+                        href={"https://github.com/" + data.github_handle}>{data.github_handle}</a></p>
                 },
                 {
                     title: <p>{github}<br/>{blog_backend}</p>,
